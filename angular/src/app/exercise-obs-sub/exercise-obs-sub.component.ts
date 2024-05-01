@@ -11,10 +11,13 @@ export class ExerciseObsSubComponent {
     console.log('Observable executed');
     subscriber.next('value1');
     subscriber.next('value2');
+
     setTimeout(() => {
       subscriber.next('value3');
-      subscriber.complete();
     }, 2000);
+    setTimeout(() => {
+      subscriber.error(new Error('Failure'));
+    }, 4000);
 
     return () => {
       console.log('Teardown');
@@ -25,6 +28,7 @@ export class ExerciseObsSubComponent {
     console.log('Before subscribe');
     this.observable$.subscribe({
       next: (value) => console.log(value),
+      error: (err) => console.log(err.message),
       complete: () => console.log('Completed'),
     });
     console.log('After subscription');

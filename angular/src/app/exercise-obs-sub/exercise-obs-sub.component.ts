@@ -11,16 +11,16 @@ export class ExerciseObsSubComponent {
     console.log('Observable executed');
     subscriber.next('value1');
     subscriber.next('value2');
-
-    setTimeout(() => {
-      subscriber.next('value3');
-    }, 2000);
     setTimeout(() => {
       subscriber.error(new Error('Failure'));
+    }, 2000);
+    setTimeout(() => {
+      subscriber.next('value3');
     }, 4000);
 
     return () => {
       console.log('Teardown');
+      subscriber.complete();
     };
   });
 
